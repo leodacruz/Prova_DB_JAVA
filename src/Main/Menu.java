@@ -21,7 +21,7 @@ public class Menu {
     }
 
     public static boolean switchCase(){
-        System.out.println("ESCOLHA UMA OPÇÃO: ");
+        System.out.println("ESCOLHA UMA OPCAO: ");
 
         switch (Inputs.inputInt()){
             case 1:
