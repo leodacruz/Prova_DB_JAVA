@@ -1,17 +1,33 @@
 package Main;
 
+import java.util.ArrayList;
+
 public class Cliente {
 
-    private int ind;
+    private int cpf;
     private String nome;
+    private static ArrayList<Item> itens = new ArrayList<>();
+    private String formaDePagamento="";
 
-    public Cliente(int ind, String nome) {
-        this.ind = ind;
+    public Cliente(int id, String nome) {
+        this.cpf = id;
         this.nome = nome;
     }
 
-    public int getInd() {
-        return ind;
+    public  ArrayList<Item> getItens() {
+        return itens;
+    }
+
+    public  void setItens(ArrayList<Item> itens) {
+        Cliente.itens = itens;
+    }
+
+    public void setFormaDePagamento(String formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
+    }
+
+    public int getCpf() {
+        return cpf;
     }
 
     public String getNome() {
@@ -20,5 +36,9 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getFormaDePagamento() {
+        return formaDePagamento;
     }
 }
