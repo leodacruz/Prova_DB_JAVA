@@ -198,4 +198,30 @@ public class Pedido {
         return null;
     }
 
+    public static void finalizarCompra(){
+    //mostar o carrinho e perguntar se quer finalizar a compra
+    //duas opcoes voltar e finalizar compra
+    //metodo de pagamento 
+    //cartao de credito ou dinheiro
+    //cartao de credito eh permitido parcelar mas dependendo da quantidade possuiu juros
+    //tabela de juros
+    //ate 200 3x sem juros; max limite de parcelas
+    //ate 400 6x sem juros; 8x com juros 10% do valor 
+    //ate 600 8 sem juros;10x com juros 10% do valor
+    //acima de 600 10x sem juros;12 com juros 10% valor
+
+    //apos finalizar a compra aparece a nota fiscal (dai sim usa o imprimePedido)
+    //apos finalizar a compra salva a nota fiscal e limpa a lista de compras
+    //talvez criar o metodo de salvar um arquivo como nota fiscal mesmo, acho que seria legal
+    //mas pode ser só o print na tela mesmo que da certo tb 
+
+    //deixar uma opcao secreta que aparece as vendas de todos os clientes do dia
+
+    //na opcao de pagar com dinheiro
+    
+    }
+
+
+
+
 }

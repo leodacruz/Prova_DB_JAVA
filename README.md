@@ -21,6 +21,8 @@ Add novo metodo que imprime o carrinho de compras, ja existe o imprime pedido, m
 Add um metodo que pesquisa se o item que a pessoa escolheu tem na lista de compras(eh igual ao do estoque só que usado na lista de compras) e retorna o item
 criei um metodo no Estoque para repor o esoque de um produto que foi devolvido, ele precisa de um Item como parametro
 
+*finalizarCompra() = como funciona:
+
 
 
 
