@@ -62,24 +62,32 @@ public class Estoque {
         System.out.println("________________________________________________________________________");
     }
 
-    public static boolean darBaixaEmEstoque(String nome, int quantidadeParaDarBaixa) {
-        Produto produto = encontraProduto(nome);
+    /**
+     * Aqui nunca ira entrar na opcao que nao existe a quantidade no estoque pq eh testada antes
+     * 
+     * 
+     */
+    public static void darBaixaEmEstoque(String nome, int quantidadeParaDarBaixa) {
+        Produto produto = encontraProduto(nome); //aqui eu tenho certeza que existe esse produto, pois ja foi testado antes(Pedido.adicionaItem())
+        //e diminuir a quantidade deste produto tb ja foi testada antes, entao eh redundancia perguntar novamente 
+        listaDeProdutos.get(getPosicaoDoProdutoNaLista(produto)).setQuantidadeEmEstoque(getQuantidadeAtualEmEstoque(produto) - quantidadeParaDarBaixa);
+        /* 
         if (produto != null) {
             if (temEstoqueOuNao(produto, quantidadeParaDarBaixa)) {
                 listaDeProdutos.get(getPosicaoDoProdutoNaLista(produto)).setQuantidadeEmEstoque(getQuantidadeAtualEmEstoque(produto) - quantidadeParaDarBaixa);
-                return true;
             } else {
                 System.out.println("Não tem quantidade o suficiente de " + produto.getNome());
-                return false;
             }
         } else {
             System.out.println("Produto não encontrado para dar baixa no estoque");
-            return false;
-        }
+        }*/
     }
 
     public static void darBaixaEmEstoque(int id, int quantidadeParaDarBaixa) {
-        Produto produto = encontraProduto(id);
+        Produto produto = encontraProduto(id);//aqui eu tenho certeza que existe esse produto, pois ja foi testado antes(Pedido.adicionaItem())
+        //e diminuir a quantidade deste produto tb ja foi testada antes, entao eh redundancia perguntar novamente 
+        getListaDeProdutos().get(getPosicaoDoProdutoNaLista(produto)).setQuantidadeEmEstoque(getQuantidadeAtualEmEstoque(produto) - quantidadeParaDarBaixa);
+        /* 
         if (!produto.equals(null)) {
             if (temEstoqueOuNao(produto, quantidadeParaDarBaixa)) {
                 getListaDeProdutos().get(getPosicaoDoProdutoNaLista(produto)).setQuantidadeEmEstoque(getQuantidadeAtualEmEstoque(produto) - quantidadeParaDarBaixa);
@@ -88,7 +96,7 @@ public class Estoque {
             }
         } else {
             System.out.println("Produto não encontrado para dar baixa no estoque");
-        }
+        }*/
     }
 
     public static int getQuantidadeAtualEmEstoque(Produto produto) {
@@ -99,6 +107,10 @@ public class Estoque {
         return getListaDeProdutos().indexOf(produto);
     }
 
+    /**
+     * @return true caso tenha a quantidade desejada do produto no estoque, 
+     * false se nao possuir
+     */
     public static boolean temEstoqueOuNao(Produto produto, int quantidadeParaDarBaixa) {
         int posicaoDoProdutoNaLista, quantidadeAtualEmEstoque;
         posicaoDoProdutoNaLista = getListaDeProdutos().indexOf(produto);
