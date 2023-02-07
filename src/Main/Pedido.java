@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class Pedido {
 
-    private static Cliente cliente;
+    private static ArrayList<Cliente> listaDeClientes = new ArrayList<>();
+
     private static ArrayList<Item> listaDeItens = new ArrayList<>();
     private static double valorTotalDoPedido = 0;
-    private static String metodoDePagamento ="";
 
     public static void calculaValorTotal() {
         double subTotal = 0;
@@ -63,6 +63,18 @@ public class Pedido {
         imprimeValorTotal();
     }
 
+    public static void imprimePedido(ArrayList<Item> lista) {
+        System.out.println("\n_____________________________________________________________________________________");
+        System.out.println("                              NOTA FISCAL");
+        System.out.printf("ID       |NOME            |PRECO UN           |QUANTIDADE   |PRECO ITEM \n");
+        for (Item item : lista) {
+            System.out.printf("%-8d | %-14s | R$%-15.2f | %-10d  | R$%.2f\n", item.getProduto().getId(),
+                    item.getProduto().getNome(),
+                    item.getProduto().getPreco(), item.getQuantidade(), item.getValorDoItem());
+        }
+        // imprimeValorTotal();
+    }
+
     public static void imprimeCarrinho() {
         // ve se a lista esta vazia
         if (listaDeItens.size() == 0) {
@@ -84,6 +96,13 @@ public class Pedido {
     private static void imprimeValorTotal() {
         System.out.println();
         System.out.printf("Total: R$%.2f", valorTotalDoPedido);
+        System.out
+                .println("\n_____________________________________________________________________________________\n\n");
+    }
+
+    private static void imprimeValorTotal(double valor) {
+        System.out.println();
+        System.out.printf("Total: R$%.2f", valor);
         System.out
                 .println("\n_____________________________________________________________________________________\n\n");
     }
@@ -209,23 +228,18 @@ public class Pedido {
         // cartao de credito eh permitido parcelar mas dependendo da quantidade possuiu
         // juros
         // tabela de juros
-        // ate 200 3x sem juros; max limite de parcelas
-        // ate 400 6x sem juros; 8x com juros 10% do valor
-        // ate 600 8 sem juros;10x com juros 10% do valor
-        // acima de 600 10x sem juros;12 com juros 10% valor
+        // ate 200 3x sem juros; 
+        // ate 400 6x sem juros; 
+        // ate 600 8 sem juros;
+        // acima de 600 10x sem juros;
 
-        // apos finalizar a compra aparece a nota fiscal (dai sim usa o imprimePedido)
-        // apos finalizar a compra salva a nota fiscal e limpa a lista de compras
-        // talvez criar o metodo de salvar um arquivo como nota fiscal mesmo, acho que
-        // seria legal
-        // mas pode ser s√≥ o print na tela mesmo que da certo tb
+        
 
-        // deixar uma opcao secreta que aparece as vendas de todos os clientes do dia
-
-        // na opcao de pagar com dinheiro
-        // se a pessoa dar um valor maior que o preco final devolver o troco certinho
-        // se a pessoa dar um valor inferior,oferecer tres opcoes de retirar um item do
-        // carrinho, voltar para formas de pagamento e cancelar compra(limpa o carrinho)
+        // primeiro ve se tem algo no carrinho
+        if (listaDeItens.size() == 0) {
+            System.out.println("NAO TEM NADA NO SEU CARRINHO");
+            return;
+        }
 
         // cadastro cliente
         // ------------------------------------------------------------------------------------------------------------
@@ -233,21 +247,21 @@ public class Pedido {
         imprimeCarrinho();
         System.out.println("VOCE DESEJA CPF NA NOTA?\n DIGITE 1 PARA SIM, 2 PARA NAO OU 0 PARA VOLTAR");
 
-        Cliente clienteAux; //varivael aux para salvar o prox cliente
+        Cliente clienteAux; // varivael aux para salvar o prox cliente
 
         try {
             switch (Inputs.inputInt()) {
-                case 1:
-                    clienteAux = criaCliente();
-                    break;
-                case 2:
-                    clienteAux = new Cliente((NotasFiscais.TotalDeNotas() + 1), null);
-                    break;
-                case 0:
-                    return;
-                default:
-                    System.out.println("VOCE NAO ESCOLHEU UMA OPCAO VALIDA, VOLTANDO");
-                    return;
+            case 1:
+                clienteAux = criaCliente();
+                break;
+            case 2:
+                clienteAux = new Cliente((listaDeClientes.size() + 1), null);
+                break;
+            case 0:
+                return;
+            default:
+                System.out.println("VOCE NAO ESCOLHEU UMA OPCAO VALIDA, VOLTANDO");
+                return;
             }
         } catch (Exception e) {
             System.out.println("VOCE NAO ESCOLHEU UM NUMERO, VOLTANDO");
@@ -262,37 +276,47 @@ public class Pedido {
         System.out.println("DIGITE 2 PARA COMPRAR COM DINHEIRO   ");
         System.out.println("DIGITE 0 PARA VOLTAR   ");
 
-        String metodoDePagamentoAux; //variavel auxiliar para salvar metodo de pagamento
+        String metodoDePagamentoAux; // variavel auxiliar para salvar metodo de pagamento
         try {
             switch (Inputs.inputInt()) {
-                case 1:
-                    metodoDePagamentoAux = pagamentoComCartaoCredito();
-                    break;
-                case 2:
-                    metodoDePagamentoAux = pagamentoComDinheiro();
-                    break;
-                case 0:
-                    return;
-                default:
-                    System.out.println("VOCE NAO ESCOLHEU UMA OPCAO VALIDA, VOLTANDO");
-                    return;
+            case 1:
+                metodoDePagamentoAux = pagamentoComCartaoCredito();
+                break;
+            case 2:
+                metodoDePagamentoAux = pagamentoComDinheiro();
+                break;
+            case 0:
+                return;
+            default:
+                System.out.println("VOCE NAO ESCOLHEU UMA OPCAO VALIDA, VOLTANDO");
+                return;
             }
         } catch (Exception e) {
             System.out.println("VOCE NAO ESCOLHEU UM NUMERO, VOLTANDO");
             return;
         }
 
-        //Compra finalizada !!-----------------------------------------------------------------------------------------------------------------------
+        if (metodoDePagamentoAux == null) {
+            return;
+        }
+
+        // Compra finalizada !!-----------------------------------------------------------------------------------------------------------------------
+        // salvando essa compra
         System.out.println("SUA NOTA FISCAL");
         imprimePedido();
-        System.out.println("SEU METODO DE PAGAMENTO\n"+metodoDePagamento);
-        cliente = clienteAux; //atribuo o cliente auxiliar no Atributo Cliente da classe
-        metodoDePagamento = metodoDePagamentoAux;
-        
-        NotasFiscais.addNotaFiscal(new Pedido());
-        
+        System.out.println("SEU METODO DE PAGAMENTO\n" + metodoDePagamentoAux);
+        listaDeClientes.add(clienteAux);
+        listaDeClientes.get(listaDeClientes.size() - 1).setFormaDePagamento(metodoDePagamentoAux);
+        ArrayList<Item> listaAux = new ArrayList<>();
+        listaAux.addAll(listaDeItens);
+        listaDeClientes.get(listaDeClientes.size() - 1).setItens(listaAux);
+        listaDeClientes.get(listaDeClientes.size() - 1).setValorTotal(valorTotalDoPedido);
 
+        // limpando para novas compras
+        listaDeItens.clear(); // limpa a lista de itens
+        valorTotalDoPedido = 0; // limpo o valor total
 
+        // o estoque continua igual, esta certinho
 
     }
 
@@ -311,23 +335,154 @@ public class Pedido {
         }
 
         // para identificar o cpf
-        System.out.println("INFORME SEU NOME");
+        System.out.println("INFORME SEU CPF");
         try {
             cpf = Inputs.inputInt();
         } catch (Exception e) {
-            System.out.println("ERRO AO INFORMAR SEU NOME");
-            System.out.println("SEU NOME FOI DEFINIDO PARA FULANO(A)");
+            System.out.println("ERRO AO INFORMAR SEU CPF");
+            System.out.print("SEU CPF FOI DEFINIDO PARA ");
             cpf = listaDeClientes.size() + 1;
+            System.out.println(cpf);
         }
 
         return new Cliente(cpf, nome);
     }
 
-    public static String pagamentoComCartaoCredito(){
+    public static String pagamentoComCartaoCredito() {
+        System.out.println("O total da sua compra foi: ");
+        imprimeValorTotal();
+        System.out.println("Informe em quantas vezes deseja pagar: ");
+        double valor;
+        
+        
+        while (true) {
+            try {
+                valor = Inputs.inputDouble();
+                break; // sair do while
+            } catch (Exception e) {
+                System.out.println("ERRO AO INFORMAR O VALOR, TENTE NOVAMENTE\n");
+            }
+        }
+
+        if (valor < valorTotalDoPedido) {
+            System.out.println("VALOR INFORMADO MENOR QUE O TOTAL DA COMPRA\nVOLTANDO");
+            return null;
+        }
+        
+        
         return " pagou com cartao";
     }
 
-    public static String pagamentoComDinheiro(){
-        return " pagou com dinheiro";
+    public static String pagamentoComDinheiro() {
+
+        System.out.println("O total da sua compra foi: ");
+        imprimeValorTotal();
+        System.out.println("Informe o valor a pagar");
+        double valor;
+        while (true) {
+            try {
+                valor = Inputs.inputDouble();
+                break; // sair do while
+            } catch (Exception e) {
+                System.out.println("ERRO AO INFORMAR O VALOR, TENTE NOVAMENTE\n");
+            }
+        }
+
+        if (valor < valorTotalDoPedido) {
+            System.out.println("VALOR INFORMADO MENOR QUE O TOTAL DA COMPRA\nVOLTANDO");
+            return null;
+        }
+
+        double troco = valor - valorTotalDoPedido;
+        String troco1 = "Pagou com " + valor + "R$ e seu troco foi de " + troco + "R$\n";// valor normal
+        String troco2 = menorQuantidadeNotas(troco);// aqui com a menor quantidade de notas possiveis
+
+        return troco1 + troco2;
+    }
+
+    public static String menorQuantidadeNotas(double troco) {
+        // primeiro tratar a parte interira
+        int trocoInt = (int) troco; // pego a parte inteira,o java ignora aqui os centavos
+
+        // a String que sera usada para retorno
+        String trocoFinal = "Voce recebeu seu troco como: \n";
+
+        // agora faco os calculos de todos as notas
+        int troco100 = trocoInt / 100;
+        int troco50 = trocoInt % 100 / 50;
+        int troco20 = trocoInt % 100 % 50 / 20;
+        int troco10 = trocoInt % 100 % 50 % 20 / 10;
+        int troco5 = trocoInt % 100 % 50 % 20 % 10 / 5;
+        int troco1 = trocoInt % 100 % 50 % 20 % 10 % 5 / 1;
+
+        // agora um monte de if para ir concatenando
+
+        if (troco100 != 0) {
+            trocoFinal += troco100 + " Nota(s) de 100R$\n";
+        }
+        if (troco50 != 0) {
+            trocoFinal += troco50 + " Nota(s) de 50R$\n";
+        }
+        if (troco20 != 0) {
+            trocoFinal += troco20 + " Nota(s) de 20R$\n";
+        }
+        if (troco10 != 0) {
+            trocoFinal += troco10 + " Nota(s) de 10R$\n";
+        }
+        if (troco5 != 0) {
+            trocoFinal += troco5 + " Nota(s) de 5R$\n";
+        }
+        if (troco1 != 0) {
+            trocoFinal += troco1 + " Moeda(s) de 1R$\n";
+        }
+
+        // tratar parte dos centavos, eh praticamente igual
+        // mas antes precisamos pegar os centavos do troco assim
+        double trocoCentavos = troco - trocoInt; // aqui tera os centavos com o 0 na frente "0,centavos"
+        double centavos = trocoCentavos * 100; // 100 vezes tranforma o numero com o 0 na frente num normal "centavos"
+        int centavosFinal = (int) centavos; // faÁo o casting para int
+        // e faco o mesmo processo das notas
+        // calculos dos centavos
+        int troco50c = centavosFinal / 50;
+        int troco25c = centavosFinal % 50 / 25;
+        int troco10c = centavosFinal % 50 % 25 / 10;
+        int troco5c = centavosFinal % 50 % 25 % 10 / 5;
+        int troco1c = centavosFinal % 50 % 25 % 10 % 5 / 1;
+
+        // monte de if concatenando
+
+        if (troco50c != 0) {
+            trocoFinal += troco50c + " Moeda(s) de 50 centavos\n";
+        }
+        if (troco25c != 0) {
+            trocoFinal += troco25c + " Moeda(s) de 25 centavos\n";
+        }
+        if (troco10c != 0) {
+            trocoFinal += troco10c + " Moeda(s) de 10 centavos\n";
+        }
+        if (troco5c != 0) {
+            trocoFinal += troco5c + " Moeda(s) de 5 centavos\n";
+        }
+        if (troco1c != 0) {
+            trocoFinal += troco1c + " Moeda(s) de 1 centavos\n";
+        }
+
+        return trocoFinal;
+    }
+
+    public static void historicoNotas() {
+        System.out.println("Sua notas fiscais: \n");
+
+        for (Cliente cliente : listaDeClientes) {
+            System.out.println("\n----------------------------------------------");
+            System.out.println("nome: " + cliente.getNome());
+            System.out.println("cpf: " + cliente.getCpf());
+            imprimePedido(cliente.getItens());
+            imprimeValorTotal(cliente.getValorTotal());
+            System.out.println("Sua Forma de Pagamento foi: ");
+            System.out.println(cliente.getFormaDePagamento());
+            System.out.println("----------------------------------------------\n\n");
+
+        }
     }
 }

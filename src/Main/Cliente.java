@@ -6,8 +6,17 @@ public class Cliente {
 
     private int cpf;
     private String nome;
-    private static ArrayList<Item> itens = new ArrayList<>();
+    private  ArrayList<Item> itens = new ArrayList<>();
     private String formaDePagamento="";
+    private double valorTotal=0;
+
+    public double getValorTotal() {
+        return this.valorTotal;
+    }
+
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
 
     public Cliente(int id, String nome) {
         this.cpf = id;
@@ -19,7 +28,7 @@ public class Cliente {
     }
 
     public  void setItens(ArrayList<Item> itens) {
-        Cliente.itens = itens;
+        this.itens = itens;
     }
 
     public void setFormaDePagamento(String formaDePagamento) {

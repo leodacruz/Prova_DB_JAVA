@@ -9,6 +9,7 @@ public class Menu {
         do {
             mostraMenu();
         } while (switchCase());
+        System.out.println("ENCERRANDO PROGRAMA!!");
     }
 
     public static void mostraMenu() {
@@ -25,28 +26,35 @@ public class Menu {
         System.out.println("ESCOLHA UMA OPCAO: ");
         try {
             switch (Inputs.inputInt()) {
-                case 1:
-                    Estoque.imprimeCatalagoDoEstoque();
-                    return true;
-                case 2:
-                    Pedido.imprimeCarrinho();
-                    return true;
-                case 3:
+            case 1:
+                Estoque.imprimeCatalagoDoEstoque();
+                return true;
+            case 2:
+                Pedido.imprimeCarrinho();
+                return true;
+            case 3:
                 Pedido.adicionaItem();
-                    return true;
-                case 4:
-                    Pedido.retiraItem();
-                    return true;
-                case 0:
-                    return false;
-                default:
-                    System.out.println("\nOpcao invalida!!\n");
-                    return true;
+                return true;
+            case 4:
+                Pedido.retiraItem();
+                return true;
+            case 5:
+                Pedido.finalizarCompra();
+                return true;
+            case 99:
+                Pedido.historicoNotas();
+                return true;
+            case 0:
+                return false;
+            default:
+                System.out.println("\nOpcao invalida!!\n");
+                return true;
             }
         } catch (Exception e) {
             System.out.println("\nValor informado nao eh um numero!\n");
             return true;
         }
+
     }
 
 }
