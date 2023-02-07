@@ -18,13 +18,13 @@ public class Pedido {
     }
 
     public static boolean adicionaItemNaLista(Produto produto, int quantidade) {
-        System.out.println(produto.getNome());
         // primeiro ve se o produto ja existe na lista de itens
         for (Item item : listaDeItens) {
             if (item.getProduto().getNome().equals(produto.getNome())) {
 
-                if (Estoque.temEstoqueOuNao(produto, quantidade)) { //isso me garante que nunca ira tirar mais do que tem no estoque
-                    Estoque.darBaixaEmEstoque(item.getProduto().getId(), quantidade); //da pra simplificar esse metodo
+                if (Estoque.temEstoqueOuNao(produto, quantidade)) { // isso me garante que nunca ira tirar mais do que
+                                                                    // tem no estoque
+                    Estoque.darBaixaEmEstoque(item.getProduto().getId(), quantidade); // da pra simplificar esse metodo
                     item.setQuantidade(item.getQuantidade() + quantidade);
                     item.defineValorTotal();
                     System.out.println("Foi adicionada a quantidade ao item ja existente.");
@@ -50,6 +50,7 @@ public class Pedido {
     }
 
     public static void imprimePedido() {
+        System.out.println("\n_____________________________________________________________________________________");
         System.out.println("                              NOTA FISCAL");
         System.out.printf("ID       |NOME            |PRECO UN           |QUANTIDADE   |PRECO ITEM \n");
         for (Item item : listaDeItens) {
@@ -60,16 +61,33 @@ public class Pedido {
         imprimeValorTotal();
     }
 
+    public static void imprimeCarrinho() {
+        // ve se a lista esta vazia
+        if (listaDeItens.size() == 0) {
+            System.out.println("\nSUA LISTA DE COMPRAS ESTA VAZIA\n");
+            return;
+        }
+        System.out.println("_____________________________________________________________________________________");
+        System.out.println("                              SEU CARRINHO DE COMPRAS");
+        System.out.printf("ID       |NOME            |PRECO UN           |QUANTIDADE   |PRECO ITEM \n");
+        for (Item item : listaDeItens) {
+            System.out.printf("%-8d | %-14s | R$%-15.2f | %-10d  | R$%.2f\n", item.getProduto().getId(),
+                    item.getProduto().getNome(),
+                    item.getProduto().getPreco(), item.getQuantidade(), item.getValorDoItem());
+        }
+        imprimeValorTotal();
+
+    }
+
     private static void imprimeValorTotal() {
         System.out.println();
         System.out.printf("Total: R$%.2f", valorTotalDoPedido);
-        System.out.println("________________________________________________________________________");
-        System.out.println();
-        System.out.println();
+        System.out
+                .println("\n_____________________________________________________________________________________\n\n");
     }
 
-    public static void adicionaItem() { // arrumei todo esse metodo,tava estranho
-       
+    public static void adicionaItem() { // arrumei todo 3esse metodo,tava estranho
+
         // aqui precisa de um controle de excecoes
         String nome;
         try {
@@ -140,7 +158,44 @@ public class Pedido {
         Pedido.valorTotalDoPedido = valorTotalDoPedido;
     }
 
-    public static void retiraItem(){
-    
+    public static void retiraItem() {
+
+        // Mostra o carrinho de compras para o usuario
+        imprimeCarrinho();
+
+        // pede para o usuario informar qual item quer retirar
+        System.out.println("Informe o Item que deseja retirar do carrinho");
+
+        // tratamento da excecao
+        String nome;
+        try {
+            nome = recebeNomeDoTeclado();
+        } catch (Exception e) {
+            System.out.println("ERRO AO INFORMAR O NOME DO ITEM"); // nem sei como ativar essa excecao
+            return;
+        }
+
+        // ver se o produto existe na lista de compras
+        Item item = temNaLista(nome);
+        if (item == null) {
+            System.out.println("Produto não existe na sua  lista de compras");
+            return;
+        }
+
+        // removo o item da lista de compras, mas antes reponho ele no estoque
+        Estoque.reporEstoqueProduto(item); //repor o estoque deste produto
+        System.out.println("\nProduto removido com sucesso!!\n");
+        listaDeItens.remove(item); //removo ele da lista de compras
+
     }
+
+    public static Item temNaLista(String nome) {
+        for (Item item : listaDeItens) {
+            if (item.getProduto().getNome().equalsIgnoreCase(nome)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
 }

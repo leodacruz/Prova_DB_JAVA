@@ -124,4 +124,13 @@ public class Estoque {
     public static ArrayList<Produto> getListaDeProdutos() {
         return listaDeProdutos;
     }
+
+    /**
+     * Repor quantidade devolvida para o estoque
+     * @param item
+     */
+    public static void reporEstoqueProduto(Item item){
+    int indice = getPosicaoDoProdutoNaLista(item.getProduto());
+    listaDeProdutos.get(indice).setQuantidadeEmEstoque(getQuantidadeAtualEmEstoque(item.getProduto())+item.getQuantidade());
+    }
 }
