@@ -26,7 +26,7 @@ public class Pedido {
 
                 if (Estoque.temEstoqueOuNao(produto, quantidade)) { // isso me garante que nunca ira tirar mais do que
                                                                     // tem no estoque
-                    Estoque.darBaixaEmEstoque(item.getProduto().getId(), quantidade); // da pra simplificar esse metodo
+                    Estoque.darBaixaEmEstoque(item.getProduto().getId(), quantidade); 
                     item.setQuantidade(item.getQuantidade() + quantidade);
                     item.defineValorTotal();
                     System.out.println("Foi adicionada a quantidade ao item ja existente.");
@@ -37,8 +37,7 @@ public class Pedido {
                 }
             }
         }
-        // isso ele sempre faz quando o produto ainda nao foi adicionado na lista de
-        // itens
+        // isso ele sempre faz quando o produto ainda nao foi adicionado na lista de itens
         if (Estoque.temEstoqueOuNao(produto, quantidade)) {
             listaDeItens.add(new Item(produto, quantidade));
             Estoque.darBaixaEmEstoque(produto.getId(), quantidade);
@@ -72,7 +71,6 @@ public class Pedido {
                     item.getProduto().getNome(),
                     item.getProduto().getPreco(), item.getQuantidade(), item.getValorDoItem());
         }
-        // imprimeValorTotal();
     }
 
     public static void imprimeCarrinho() {
@@ -107,7 +105,7 @@ public class Pedido {
                 .println("\n_____________________________________________________________________________________\n\n");
     }
 
-    public static void adicionaItem() { // arrumei todo 3esse metodo,tava estranho
+    public static void adicionaItem() { // arrumei todo esse metodo,tava estranho
 
         // aqui precisa de um controle de excecoes
         String nome;
@@ -199,7 +197,7 @@ public class Pedido {
         // ver se o produto existe na lista de compras
         Item item = temNaLista(nome);
         if (item == null) {
-            System.out.println("Produto nÃ£o existe na sua  lista de compras");
+            System.out.println("Produto naoo existe na sua  lista de compras");
             return;
         }
 
@@ -220,8 +218,7 @@ public class Pedido {
     }
 
     public static void finalizarCompra() {
-        
-
+   
         // primeiro ve se tem algo no carrinho
         if (listaDeItens.size() == 0) {
             System.out.println("NAO TEM NADA NO SEU CARRINHO");
@@ -303,8 +300,6 @@ public class Pedido {
         listaDeItens.clear(); // limpa a lista de itens
         valorTotalDoPedido = 0; // limpo o valor total
 
-        // o estoque continua igual, esta certinho
-
     }
 
     public static Cliente criaCliente() {
@@ -335,12 +330,17 @@ public class Pedido {
         return new Cliente(cpf, nome);
     }
 
-    public static String pagamentoComCartaoCredito() { // ta bem feio esse metodo
+    public static String pagamentoComCartaoCredito() { // ta bem feio esse metodo!
+        //esse metodo poderia ser mais otmizado, so que o tempo para entrega tava acabando e 
+        //tb isso eh uma funcionalidade a mais, entao né. Mas da pra ser melhorado. 
+        
         // tabela de juros
         // ate 200 3x sem juros;
         // ate 400 6x sem juros;
         // ate 600 8 sem juros;
         // acima de 600 10x sem juros;
+        
+        //mostrar ao usuario suas opcoes
         String pagamentoCredito = "Seu pagamento foi no Credito em:";
         System.out.println("O total da sua compra foi: ");
         imprimeValorTotal();
@@ -369,6 +369,8 @@ public class Pedido {
                 System.out.println("ERRO AO INFORMAR O VALOR, TENTE NOVAMENTE\n");
             }
         }
+        
+        //isso poderia ser melhorado,muito grande e com repeticoes desnecessarias
         switch (prestacao) {
         case 1:
             pagamentoCredito += "1x sem juros de " + valorTotalDoPedido + "R$";
@@ -513,6 +515,7 @@ public class Pedido {
         double centavos = trocoCentavos * 100; // 100 vezes tranforma o numero com o 0 na frente num normal "centavos"
         int centavosFinal = (int) centavos; // faço o casting para int
         // e faco o mesmo processo das notas
+        
         // calculos dos centavos
         int troco50c = centavosFinal / 50;
         int troco25c = centavosFinal % 50 / 25;
@@ -542,8 +545,11 @@ public class Pedido {
     }
 
     public static void historicoNotas() {
+        if(listaDeClientes.size()==0) {
+          System.out.println("Voce nao concluiu nenhuma venda");
+          return;
+        }
         System.out.println("Sua notas fiscais: \n");
-
         for (Cliente cliente : listaDeClientes) {
             System.out.println("\n----------------------------------------------");
             System.out.println("nome: " + cliente.getNome());

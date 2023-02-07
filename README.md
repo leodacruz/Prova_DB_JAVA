@@ -1,6 +1,6 @@
 # SuperMercadoProva
 Prova Leonardo Cruz
-Fiz oque o enunciado pedia e acrescenteu novas funcionalidades ao programa,abaixo explico com detalhes cada etapa para a conclusao do projeto.
+*Fiz oque o enunciado pedia e acrescenteu novas funcionalidades ao programa,abaixo explico com detalhes cada etapa para a conclusao do projeto.
 
 **Funcionalidades novas:
 -Retirar item do carrinho
@@ -14,7 +14,7 @@ Antes ele nao descontava do estoque pq nao tinha a quantidade minima, mas add no
 baixa e add no "carrinho de compras" somente se a quantidade que ele quer tenha no estoque. Para isso modifiquei bastante o metodo
 Pedido.adicionaItem() pq tinha umas coisas me incomodando e tirei algumas redundanceas pq algumas coisas eu perguntava no Pedido.adicionaItem()
 e no Estoque.darBaixaEmEstoque(). Uma coisa que ficou me incomodando depois de corrigido o bug foi o fato de o Pedido.adicionaItem() ter ficado muito
-grande, dai nÃƒÂ£o soube dizer se deveria separar os filtros que botei em novos metodos ou deixar como estah. Eu decidi em deixar como estah, pois alguns filtros
+grande, dai nÃ£o soube dizer se deveria separar os filtros que botei em novos metodos ou deixar como estah. Eu decidi em deixar como estah, pois alguns filtros
 encerram o add do item caso alguma informacao passada fosse vista como um erro.
 
 *******2 e 3 =Irei implementar o 2 e 3 juntos num metodo chamado "finalizar compra" 
@@ -27,18 +27,18 @@ Apos mostra duas opcoes de PAGAMENTO(ITEM 2 E 3 DO ENUNCIADO)
 2=pagar com DINHEIRO (ITEM 2 E 3 DO ENUNCIADO)
 
 ao escolher alguma opcao ele trata elas em um metodo;
-Depois de finalizado o pagamento , se salva as informaÃ§Ãµes num Array de Clientes que esta dentro
+Depois de finalizado o pagamento , se salva as informações num Array de Clientes que esta dentro
 da Classe Pedido, isso para o menu secreto.
 
-Agora explicaÃ§Ã£o de todas as modificaÃ§Ãµes nas classes:
-**Cliente : Agora a classe Cliente salva as informaÃ§Ãµes de um pedido. Anteriormente ela noa era usada
-em nada e agora tem a funcionalidade de salvar informaÃ§Ãµes das compras deste cliente. Tinha pensando
+Agora explicação de todas as modificações nas classes:
+**Cliente : Agora a classe Cliente salva as informações de um pedido. Anteriormente ela noa era usada
+em nada e agora tem a funcionalidade de salvar informações das compras deste cliente. Tinha pensando
 em criar uma nova classe chamada "nota fiscal" para isso, mas resolvi implementar assim.
 
-**Estoque : nÃ£o fiz nenhuma grande alteraÃ§Ã£o, mas tirei algumas redundancias. Essa que estavam nos metodos
+**Estoque : não fiz nenhuma grande alteração, mas tirei algumas redundancias. Essa que estavam nos metodos
  darBaixaEmEstoque() nas duas versoes. Anteriormente essa redundancias nao existiam, mas apos corrigir o bug
  elas apareceram pois estava repetindo as mesmas perguntas que ja tinha perguntando em Pedido.adicionaItemNaLista e
- Pedido.adicionaItem. 
+ Pedido.adicionaItem. Tb adicionei o metodo repor estoque que serve para quando o usuario quer retirar um item de seu carrinho de compras
 
 **Item : nao mexi
 
@@ -56,7 +56,7 @@ em criar uma nova classe chamada "nota fiscal" para isso, mas resolvi implementa
 -retiraItem() metodo novo que fiz para quando se quer retirar um item do carrinho,ele retira 
 o item, entao se tiver arroz 25quantidade, ele remove todos os arroz. E claro oq ele retira do carrinho
 volta pro estoque
--finalizarCompra() trata a finalizaÃ§Ã£o da compra
+-finalizarCompra() trata a finalização da compra
 -criaCliente() retorna o new Cliente para ser salvo no array
 -pagamentoComCartaoCredito() trata o pagamento com cartao de credito
 -pagamentoComDinheiro() trata o pagamneto com dinheiro
@@ -70,6 +70,10 @@ volta pro estoque
 -comentei
 -nao expliquei muito pq acho que nao era necessario
 -tentei facilitar o maximo o entendimento
+-criei novos caminhos em muitos menus, principalmente quando o usuario escrve algo que nao deve;Ex
+pedia um numero e ele escrveu letras, gera a excecao e volta pro menu anterior. Um caso so que o usuario
+eh obrigado a digitar o valor certo que eh o valor em dinheiro, ele eh obrigado a informar um valor, nao necessariamnete
+um valor maior que o total da compra,mas tem que informar um valor.
 
 
 

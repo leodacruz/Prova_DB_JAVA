@@ -13,7 +13,7 @@ public class Menu {
     }
 
     public static void mostraMenu() {
-        System.out.println("------------MENU------------");
+        System.out.println("\n\n------------MENU------------");
         System.out.println("1 - MOSTRAR CATALOGO");
         System.out.println("2 - MOSTRAR CARRINHO DE COMPRAS");
         System.out.println("3 - ADICIONAR ITEM AO CARRINHO");
