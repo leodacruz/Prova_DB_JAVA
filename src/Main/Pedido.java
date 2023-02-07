@@ -220,19 +220,6 @@ public class Pedido {
     }
 
     public static void finalizarCompra() {
-        // mostar o carrinho e perguntar se quer finalizar a compra
-        // deixe ele se identificar caso queira(Gerar nota fiscal-opcao secreta numero
-        // 99) ok
-        // metodo de pagamento
-        // cartao de credito ou dinheiro
-        // cartao de credito eh permitido parcelar mas dependendo da quantidade possuiu
-        // juros
-        // tabela de juros
-        // ate 200 3x sem juros; 
-        // ate 400 6x sem juros; 
-        // ate 600 8 sem juros;
-        // acima de 600 10x sem juros;
-
         
 
         // primeiro ve se tem algo no carrinho
@@ -296,7 +283,7 @@ public class Pedido {
             return;
         }
 
-        if (metodoDePagamentoAux == null) {
+        if (metodoDePagamentoAux == null) { // erro ao informar o valor em dinheiro
             return;
         }
 
@@ -348,29 +335,113 @@ public class Pedido {
         return new Cliente(cpf, nome);
     }
 
-    public static String pagamentoComCartaoCredito() {
+    public static String pagamentoComCartaoCredito() { // ta bem feio esse metodo
+        // tabela de juros
+        // ate 200 3x sem juros;
+        // ate 400 6x sem juros;
+        // ate 600 8 sem juros;
+        // acima de 600 10x sem juros;
+        String pagamentoCredito = "Seu pagamento foi no Credito em:";
         System.out.println("O total da sua compra foi: ");
         imprimeValorTotal();
         System.out.println("Informe em quantas vezes deseja pagar: ");
-        double valor;
-        
-        
+        System.out.println("1x sem juros de " + valorTotalDoPedido + " R$");
+        System.out.println("2x sem juros de " + (double) valorTotalDoPedido / 2 + " R$");
+        System.out.println("3x sem juros de " + (double) valorTotalDoPedido / 3 + " R$");
+        if (valorTotalDoPedido > 200) {
+            System.out.println("4x sem juros de " + (double) valorTotalDoPedido / 4 + " R$");
+            System.out.println("5x sem juros de " + (double) valorTotalDoPedido / 5 + " R$");
+            System.out.println("6x sem juros de " + (double) valorTotalDoPedido / 6 + " R$");
+        }
+        if (valorTotalDoPedido > 400) {
+            System.out.println("7x sem juros de " + (double) valorTotalDoPedido / 7 + " R$");
+            System.out.println("8x sem juros de " + (double) valorTotalDoPedido / 8 + " R$");
+            System.out.println("9x sem juros de " + (double) valorTotalDoPedido / 9 + " R$");
+            System.out.println("10x sem juros de " + (double) valorTotalDoPedido / 10 + " R$");
+        }
+
+        int prestacao;
         while (true) {
             try {
-                valor = Inputs.inputDouble();
+                prestacao = Inputs.inputInt();
                 break; // sair do while
             } catch (Exception e) {
                 System.out.println("ERRO AO INFORMAR O VALOR, TENTE NOVAMENTE\n");
             }
         }
+        switch (prestacao) {
+        case 1:
+            pagamentoCredito += "1x sem juros de " + valorTotalDoPedido + "R$";
+            break;
+        case 2:
+            pagamentoCredito += "2x sem juros de " + (double) valorTotalDoPedido / 2 + "R$";
+            break;
+        case 3:
+            pagamentoCredito += "3x sem juros de " + (double) valorTotalDoPedido / 3 + "R$";
+            break;
+        case 4:
+            if (valorTotalDoPedido > 200) {
+                pagamentoCredito += "4x sem juros de " + (double) valorTotalDoPedido / 4 + "R$";
+            } else {
+                System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
+                return null;
+            }
+            break;
+        case 5:
+            if (valorTotalDoPedido > 200) {
+                pagamentoCredito += "5x sem juros de " + (double) valorTotalDoPedido / 5 + "R$";
+            } else {
+                System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
+                return null;
+            }
+            break;
+        case 6:
+            if (valorTotalDoPedido > 400) {
+                pagamentoCredito += "6x sem juros de " + (double) valorTotalDoPedido / 6 + "R$";
+            } else {
+                System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
+                return null;
+            }
+            break;
+        case 7:
+            if (valorTotalDoPedido > 400) {
+                pagamentoCredito += "7x sem juros de " + (double) valorTotalDoPedido / 7 + "R$";
+            } else {
+                System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
+                return null;
+            }
+            break;
+        case 8:
+            if (valorTotalDoPedido > 600) {
+                pagamentoCredito += "4x sem juros de " + (double) valorTotalDoPedido / 8 + "R$";
+            } else {
+                System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
+                return null;
+            }
+            break;
+        case 9:
+            if (valorTotalDoPedido > 600) {
+                pagamentoCredito += "4x sem juros de " + (double) valorTotalDoPedido / 9 + "R$";
+            } else {
+                System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
+                return null;
+            }
+            break;
+        case 10:
+            if (valorTotalDoPedido > 600) {
+                pagamentoCredito += "4x sem juros de " + (double) valorTotalDoPedido / 10 + "R$";
+            } else {
+                System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
+                return null;
+            }
+            break;
 
-        if (valor < valorTotalDoPedido) {
-            System.out.println("VALOR INFORMADO MENOR QUE O TOTAL DA COMPRA\nVOLTANDO");
+        default:
+            System.out.println("OPCAO INVALIDA COMPRA CANCELADA\nVOLTANDO");
             return null;
         }
-        
-        
-        return " pagou com cartao";
+
+        return pagamentoCredito;
     }
 
     public static String pagamentoComDinheiro() {

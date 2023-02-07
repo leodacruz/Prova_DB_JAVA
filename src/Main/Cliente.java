@@ -6,7 +6,7 @@ public class Cliente {
 
     private int cpf;
     private String nome;
-    private  ArrayList<Item> itens = new ArrayList<>();
+    private ArrayList<Item> itens = new ArrayList<>();
     private String formaDePagamento="";
     private double valorTotal=0;
 

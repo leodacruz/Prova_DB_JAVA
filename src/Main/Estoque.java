@@ -62,11 +62,6 @@ public class Estoque {
         System.out.println("________________________________________________________________________");
     }
 
-    /**
-     * Aqui nunca ira entrar na opcao que nao existe a quantidade no estoque pq eh testada antes
-     * 
-     * 
-     */
     public static void darBaixaEmEstoque(String nome, int quantidadeParaDarBaixa) {
         Produto produto = encontraProduto(nome); //aqui eu tenho certeza que existe esse produto, pois ja foi testado antes(Pedido.adicionaItem())
         //e diminuir a quantidade deste produto tb ja foi testada antes, entao eh redundancia perguntar novamente 
@@ -107,10 +102,6 @@ public class Estoque {
         return getListaDeProdutos().indexOf(produto);
     }
 
-    /**
-     * @return true caso tenha a quantidade desejada do produto no estoque, 
-     * false se nao possuir
-     */
     public static boolean temEstoqueOuNao(Produto produto, int quantidadeParaDarBaixa) {
         int posicaoDoProdutoNaLista, quantidadeAtualEmEstoque;
         posicaoDoProdutoNaLista = getListaDeProdutos().indexOf(produto);
@@ -125,10 +116,6 @@ public class Estoque {
         return listaDeProdutos;
     }
 
-    /**
-     * Repor quantidade devolvida para o estoque
-     * @param item
-     */
     public static void reporEstoqueProduto(Item item){
     int indice = getPosicaoDoProdutoNaLista(item.getProduto());
     listaDeProdutos.get(indice).setQuantidadeEmEstoque(getQuantidadeAtualEmEstoque(item.getProduto())+item.getQuantidade());

@@ -2,17 +2,59 @@
 Prova Leonardo Cruz
 Fiz oque o enunciado pedia e acrescenteu novas funcionalidades ao programa,abaixo explico com detalhes cada etapa para a conclusao do projeto.
 
-1= bug eh que o item mesmo nao conseguindo dar baixa ele aparece no pedido final e nao pode! 
+**Funcionalidades novas:
+-Retirar item do carrinho
+-Finalizar pedido
+-secreta Mostrar historico de compras(No menu escolha a opcao 99)
+
+Resolucao dos problemas:
+*******1= bug era que o item mesmo nao conseguindo dar baixa ele aparece no pedido final e nao pode! 
 Para solucionar no metodo Pedido.adicionaItemNaLista() botei um if que pergunta se possuiu a quantidade do produto no estoque.
-Antes ele nao descontava do estoque pq nÃ£o tinha a quantidade minima, mas add no "carrinho de compras" dai o if serve para ele dar
+Antes ele nao descontava do estoque pq nao tinha a quantidade minima, mas add no "carrinho de compras" dai o if serve para ele dar
 baixa e add no "carrinho de compras" somente se a quantidade que ele quer tenha no estoque. Para isso modifiquei bastante o metodo
 Pedido.adicionaItem() pq tinha umas coisas me incomodando e tirei algumas redundanceas pq algumas coisas eu perguntava no Pedido.adicionaItem()
 e no Estoque.darBaixaEmEstoque(). Uma coisa que ficou me incomodando depois de corrigido o bug foi o fato de o Pedido.adicionaItem() ter ficado muito
-grande, dai nÃ£o soube dizer se deveria separar os filtros que botei em novos metodos ou deixar como estÃ¡. Eu decidi em deixar como estÃ¡ pois alguns filtros
-encerram o add do item caso alguma informaÃ§Ã£o passada fosse vista como um erro.
+grande, dai nÃ£o soube dizer se deveria separar os filtros que botei em novos metodos ou deixar como estah. Eu decidi em deixar como estah, pois alguns filtros
+encerram o add do item caso alguma informacao passada fosse vista como um erro.
+
+*******2 e 3 =Irei implementar o 2 e 3 juntos num metodo chamado "finalizar compra" 
+Finalizar compra: este metodo esta dentro de Pedido e tem a funcionalidade de finalizar uma compra.
+De inicio mostra duas opcoes ao usuario:
+1= informar cpf;
+2= nao informar;
+Apos mostra duas opcoes de PAGAMENTO(ITEM 2 E 3 DO ENUNCIADO)
+1=pagar com credito (NOVO)
+2=pagar com DINHEIRO (ITEM 2 E 3 DO ENUNCIADO)
+
+ao escolher alguma opcao ele trata elas em um metodo;
+Depois de finalizado o pagamento , se salva as informações num Array de Clientes que esta dentro
+da Classe Pedido, isso para o menu secreto.
+
+Agora explicação de todas as modificações nas classes:
+**Cliente : Agora a classe Cliente salva as informações de um pedido. Anteriormente ela noa era usada
+em nada e agora tem a funcionalidade de salvar informações das compras deste cliente. Tinha pensando
+em criar uma nova classe chamada "nota fiscal" para isso, mas resolvi implementar assim.
+
+**Estoque : não fiz nenhuma grande alteração, mas tirei algumas redundancias. Essa que estavam nos metodos
+ darBaixaEmEstoque() nas duas versoes. Anteriormente essa redundancias nao existiam, mas apos corrigir o bug
+ elas apareceram pois estava repetindo as mesmas perguntas que ja tinha perguntando em Pedido.adicionaItemNaLista e
+ Pedido.adicionaItem. 
+
+**Item : nao mexi
+
+**Main : nao mexi
+
+*Menu : alem de add as novas implementacoes, botei um tratamento de excessoes. E
 
 
-2 e 3 =Irei implementar o 2 e 3 juntos num metodo chamado "finalizar compra" e criei um novo chamado "retirar item do carrinho"
+
+
+
+****Coisas que fiz bastante: 
+-Tratei excecoes.
+
+
+
 
 *"retira item do carrinho": este novo metodo visa retirar algum item que esta no carrinho. Este metodo Ã© acessivel do menu principal 
  
