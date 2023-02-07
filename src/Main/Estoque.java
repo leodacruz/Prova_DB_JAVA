@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Estoque {
 
     private static int id = 1;
-    private static final ArrayList<Produto> listaDeProdutos = new ArrayList();
+    private static final ArrayList<Produto> listaDeProdutos = new ArrayList<>();
 
     public static void inicializaEstoque() {
         try {

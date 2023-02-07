@@ -69,7 +69,16 @@ public class Pedido {
     }
 
     public static void adicionaItem() { // arrumei todo esse metodo,tava estranho
-        String nome = recebeNomeDoTeclado();
+       
+        // aqui precisa de um controle de excecoes
+        String nome;
+        try {
+            nome = recebeNomeDoTeclado();
+        } catch (Exception e) {
+            System.out.println("ERRO AO INFORMAR O NOME DO ITEM");
+            return;
+        }
+
         Produto produto = Estoque.encontraProduto(nome);
 
         // dois filtros pre baixa do estoque
@@ -129,5 +138,9 @@ public class Pedido {
 
     public void setValorTotalDoPedido(double valorTotalDoPedido) {
         Pedido.valorTotalDoPedido = valorTotalDoPedido;
+    }
+
+    public static void retiraItem(){
+    
     }
 }
